@@ -43,8 +43,6 @@ public class Mainhook implements IXposedHookLoadPackage {
             GPShook.HookAndChange(loadPackageParam.classLoader,
                     SharedPref.getfloatXValue("lat"),SharedPref.getfloatXValue("log"));
 
-
-
         }
     }
 }

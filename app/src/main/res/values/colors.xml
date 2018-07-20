@@ -3,4 +3,89 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="red">#cc0001</color>
+    <color name="white">#ffffff</color>
+    <!--<color name="home_bottom_bar">#eddfd0</color>247247-->
+    <color name="black">#000000</color>
+    <color name="page_bg_color">#F7F7F7</color>
+    <color name="grey">#ffa8abad</color>
+    <color name="divide_line">#e7e7e7</color>
+    <color name="customdialog_bg">#70ffffff</color>
+    <color name="transparent">#0fff</color>
+    <color name="blue">#0000FF</color>
+    <color name="main_card_bg">#65bae3</color>
+    <color name="set_up_bg">#1e9ed8</color>
+    <color name="avatar_border">#00ffffff</color>
+    <color name="my_account_total_assets">#d5e5eb</color>
+    <color name="about_us_title">#fc5351</color>
+    <color name="bankcard_item_bg">#1a9ad4</color>
+    <color name="bankcard_xiane">#bfe4f6</color>
+    <color name="button_bg_unpressed">#fd5452</color>
+    <color name="button_bg_pressed">#e33c3c</color>
+    <color name="binding_bankcard_blue">#319ae0</color>
+    <color name="select_area_blue">#339bdf</color>
+    <color name="open_account_title_bg">#ef5c50</color>
+    <color name="risk_assessment_tips">#b3b3b3</color>
+    <color name="my_product_item_title">#f0f8f8</color>
+    <color name="transaction_money_orange">#ff9933</color>
+    <color name="transaction_money_green">#00b33b</color>
+    <color name="product_list_red">#fd5353</color>
+    <color name="detail_grey">#d5e5ec</color>
+    <color name="white_button_pressed">#eeeeee</color>
+
+    <color name="green">#00FF00</color>
+
+    <color name="yield_green">#00b33b</color>
+
+
+    <color name="color1">#ff0f9d58</color>
+    <color name="color2">#ffdb4437</color>
+    <color name="color3">#ff4285f4</color>
+    <color name="color4">#fff4b400</color>
+    <!-- Chinapay plugin begin -->
+    <color name="cp_light_white">#ffffff</color>
+    <color name="cp_red">#FF0000</color>
+    <!-- Chinapay plugin end -->
+
+    <color name="warn_grey">#999999</color>
+    <!--pdfviewer-->
+    <color name="pdfViewPager_ab_color">#990000</color>
+    <color name="pdfViewPager_background_color">@android:color/white</color>
+
+    <color name="search_grey">#f1f1f1</color>
+    <color name="my_product_detail_orange">#fff9d8</color>
+    <color name="my_product_detail_red">#fd716A</color>
+
+    <color name="hint_text_color">#b2b2b2</color>
+    <color name="bank_number_bg_color">#fff1ee</color>
+    <color name="register_ok_blue">#eff5f7</color>
+    <color name="product_list_old_customer_bg">#f5faff</color>
+
+
+    <color name="shaixuan">#999999</color>
+    <color name="tab_title">#323232</color>
+    <color name="text_color_gray">#666666</color>
+    <color name="text_color_gray_99">#999999</color>
+    <color name="text_color">#323232</color>
+    <color name="text_color_gray_a9">#a9a9a9</color>
+
+
+    <color name="blue_star">#c7d6f0</color>
+    <color name="blue_end">#b3c6e6</color>
+    <color name="yellow_bg">#ff9933</color>
+    <color name="yellow_bg_fe8a">#fe8a00</color>
+
+
+    <color name="total_sz">#ffbb73</color>
+    <color name="cash_assets">#fa5353</color>
+    <color name="zhi_jh">#f3a18b</color>
+
+    <color name="equity_portfolio">#0159d0</color>
+    <color name="bonds_funds">#5595ff</color>
+    <color name="other_assets">#65ba5d</color>
+    <color name="related_fees">#ffdc17</color>
+
+    <color name="normal_red">#fd5353</color>
+    <color name="press_red">#ff0000</color>
+    <color name="c2_c2_c2">#c2c2c2</color>
 </resources>
