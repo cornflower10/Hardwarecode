@@ -8,219 +8,161 @@ import java.io.Serializable;
 
 public class Phone implements Serializable{
     private static final long serialVersionUID = 1L;
-    /**
-     * 15507412965
-     17636530465
-     13131969504
-     15628164784
-     16608858649
-     18501948980
-     15620802593
-     15628972026
-     13069954118
-     13120457918
-     */
 
     /**
-     * imei
-     * 459923836996593
-     404415491350354
-     229190757052323
-     161078291353336
-     304673399909167
-     491529720080895
-     344862058517653
-     054303950586170
-     934209100437031
-     041384572811716
-     454208750821298
-     268204035652673
-     846182587944881
-     858409440374207
-     574705766326884
-     */
-    /**
-     * android id
-     * sbg79s4nc2l6molu
-     adjphn7goenwwqwo
-     roai8kp2q49klar6
-     2yxzudeo8bymfdl0
-     nag15b8ep66mrr0m
-     nrpd29xlbl2712vv
-     xxgb21bo56sxtamu
-     gtg37bqid4plak75
-     1qispdqru7cuqffp
-     qxma2wf8a1i90qmw
-     */
-    /**
-     * SimSerial
-     * 02141068855337204684
-     63699568568781508059
-     06188053698520372500
-     86428663427546986390
-     53929745562008357273
-     93201515995241839973
-     71910766248643898453
-     66766914658926294289
-     30387911861684610037
-     06743810877847554320
-     83068405200473876255
-     49752737622956542446
-     55583414058017247907
-     03382231164981038951
-     85918890066786388193
-     */
-    /**
-     * IMEI : 506066104722640
-     * LYMAC : BC:1A:EA:D9:8D:98
-     * WifiMAC : a8:a6:68:a3:d9:ef
-     * WifiName : netss
-     * BSSID : ce:ea:8c:1a:5c:b2
-     * IMSI : 460017932859596
-     * PhoneNumber : 13117511178
-     * SimSerial : 89860179328595969501
-     * getType : 1
-     * networkType : 6
-     * phonetype : 5
-     * SimState : 10
-     * serial : aee5060e
-     * AndroidID : fc4ad25f66d554a8
-     * DESCRIPTION : jfltexx-user 4.3 JSS15J I9505XXUEML1 release-keys
-     * lat : 117.2
-     * log : 39.12
+     * id : 8
+     * imei : 594372885650950
+     * ly_mac : B3:CE:16:7C:C5:5C
+     * wifi_mac : 23:ed:91:1f:09:b0
+     * wifi_name : TP-LINK8w
+     * bss_id : 86:39:5e:e4:0d:78
+     * imsi : 109889280878602
+     * phone_no : 13837099409
+     * sim_serial : 35936416526185198595
+     * get_type : 1
+     * network_type : 6
+     * phone_type : 5
+     * sim_state : 10
+     * serial : vrj3huz7qx5ameih
+     * android_id : tr6dnzlz270i69ck
+     * description : user unknow release-keys
+     * lat : 115.65
+     * log : 34.45
+     * serial_cpu : 5b39vappm39tq2n4
+     * province : 河南,商丘市
+     * networktor : 46000
+     * carrier : 中国移动
+     * carrier_code : 46000
+     * sim_opename : 中国移动
      */
 
-    /**
-     *     mySP.setSharedPref("networktor", "46001"); // 网络运营商类型
-     mySP.setSharedPref("Carrier", "中国联通");// 网络类型名
-     mySP.setSharedPref("CarrierCode", "46001"); // 运营商
-     mySP.setSharedPref("simopename", "中国联通");// 运营商名字
-     */
-    private String IMEI;
-    private String LYMAC;
-    private String WifiMAC;
-    private String WifiName;
-    private String BSSID;
-    private String IMSI;
-    private String PhoneNumber;
-    private String SimSerial;
-    private int getType;
-    private int networkType;
-    private int phonetype;
-    private int SimState;
+    private int id;
+    private String imei;
+    private String ly_mac;
+    private String wifi_mac;
+    private String wifi_name;
+    private String bss_id;
+    private String imsi;
+    private String phone_no;
+    private String sim_serial;
+    private int get_type;
+    private int network_type;
+    private int phone_type;
+    private int sim_state;
     private String serial;
-    private String AndroidID;
-    private String DESCRIPTION;
-    private float lat;
-    private float log;
+    private String android_id;
+    private String description;
+    private String lat;
+    private String log;
+    private String serial_cpu;
+    private String province;
     private String networktor;
-    private String Carrier;
-    private String CarrierCode;
-    private String simopename;
-    private String serialCPU;
+    private String carrier;
+    private String carrier_code;
+    private String sim_opename;
 
-    public String getSerialCPU() {
-        return serialCPU;
+    public int getId() {
+        return id;
     }
 
-    public void setSerialCPU(String serialCPU) {
-        this.serialCPU = serialCPU;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getIMEI() {
-        return IMEI;
+    public String getImei() {
+        return imei;
     }
 
-    public void setIMEI(String IMEI) {
-        this.IMEI = IMEI;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
-    public String getLYMAC() {
-        return LYMAC;
+    public String getLy_mac() {
+        return ly_mac;
     }
 
-    public void setLYMAC(String LYMAC) {
-        this.LYMAC = LYMAC;
+    public void setLy_mac(String ly_mac) {
+        this.ly_mac = ly_mac;
     }
 
-    public String getWifiMAC() {
-        return WifiMAC;
+    public String getWifi_mac() {
+        return wifi_mac;
     }
 
-    public void setWifiMAC(String WifiMAC) {
-        this.WifiMAC = WifiMAC;
+    public void setWifi_mac(String wifi_mac) {
+        this.wifi_mac = wifi_mac;
     }
 
-    public String getWifiName() {
-        return WifiName;
+    public String getWifi_name() {
+        return wifi_name;
     }
 
-    public void setWifiName(String WifiName) {
-        this.WifiName = WifiName;
+    public void setWifi_name(String wifi_name) {
+        this.wifi_name = wifi_name;
     }
 
-    public String getBSSID() {
-        return BSSID;
+    public String getBss_id() {
+        return bss_id;
     }
 
-    public void setBSSID(String BSSID) {
-        this.BSSID = BSSID;
+    public void setBss_id(String bss_id) {
+        this.bss_id = bss_id;
     }
 
-    public String getIMSI() {
-        return IMSI;
+    public String getImsi() {
+        return imsi;
     }
 
-    public void setIMSI(String IMSI) {
-        this.IMSI = IMSI;
+    public void setImsi(String imsi) {
+        this.imsi = imsi;
     }
 
-    public String getPhoneNumber() {
-        return PhoneNumber;
+    public String getPhone_no() {
+        return phone_no;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhone_no(String phone_no) {
+        this.phone_no = phone_no;
     }
 
-    public String getSimSerial() {
-        return SimSerial;
+    public String getSim_serial() {
+        return sim_serial;
     }
 
-    public void setSimSerial(String SimSerial) {
-        this.SimSerial = SimSerial;
+    public void setSim_serial(String sim_serial) {
+        this.sim_serial = sim_serial;
     }
 
-    public int getGetType() {
-        return getType;
+    public int getGet_type() {
+        return get_type;
     }
 
-    public void setGetType(int getType) {
-        this.getType = getType;
+    public void setGet_type(int get_type) {
+        this.get_type = get_type;
     }
 
-    public int getNetworkType() {
-        return networkType;
+    public int getNetwork_type() {
+        return network_type;
     }
 
-    public void setNetworkType(int networkType) {
-        this.networkType = networkType;
+    public void setNetwork_type(int network_type) {
+        this.network_type = network_type;
     }
 
-    public int getPhonetype() {
-        return phonetype;
+    public int getPhone_type() {
+        return phone_type;
     }
 
-    public void setPhonetype(int phonetype) {
-        this.phonetype = phonetype;
+    public void setPhone_type(int phone_type) {
+        this.phone_type = phone_type;
     }
 
-    public int getSimState() {
-        return SimState;
+    public int getSim_state() {
+        return sim_state;
     }
 
-    public void setSimState(int SimState) {
-        this.SimState = SimState;
+    public void setSim_state(int sim_state) {
+        this.sim_state = sim_state;
     }
 
     public String getSerial() {
@@ -231,36 +173,52 @@ public class Phone implements Serializable{
         this.serial = serial;
     }
 
-    public String getAndroidID() {
-        return AndroidID;
+    public String getAndroid_id() {
+        return android_id;
     }
 
-    public void setAndroidID(String AndroidID) {
-        this.AndroidID = AndroidID;
+    public void setAndroid_id(String android_id) {
+        this.android_id = android_id;
     }
 
-    public String getDESCRIPTION() {
-        return DESCRIPTION;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDESCRIPTION(String DESCRIPTION) {
-        this.DESCRIPTION = DESCRIPTION;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public float getLat() {
+    public String getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(String lat) {
         this.lat = lat;
     }
 
-    public float getLog() {
+    public String getLog() {
         return log;
     }
 
-    public void setLog(float log) {
+    public void setLog(String log) {
         this.log = log;
+    }
+
+    public String getSerial_cpu() {
+        return serial_cpu;
+    }
+
+    public void setSerial_cpu(String serial_cpu) {
+        this.serial_cpu = serial_cpu;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getNetworktor() {
@@ -272,26 +230,26 @@ public class Phone implements Serializable{
     }
 
     public String getCarrier() {
-        return Carrier;
+        return carrier;
     }
 
     public void setCarrier(String carrier) {
-        Carrier = carrier;
+        this.carrier = carrier;
     }
 
-    public String getCarrierCode() {
-        return CarrierCode;
+    public String getCarrier_code() {
+        return carrier_code;
     }
 
-    public void setCarrierCode(String carrierCode) {
-        CarrierCode = carrierCode;
+    public void setCarrier_code(String carrier_code) {
+        this.carrier_code = carrier_code;
     }
 
-    public String getSimopename() {
-        return simopename;
+    public String getSim_opename() {
+        return sim_opename;
     }
 
-    public void setSimopename(String simopename) {
-        this.simopename = simopename;
+    public void setSim_opename(String sim_opename) {
+        this.sim_opename = sim_opename;
     }
 }

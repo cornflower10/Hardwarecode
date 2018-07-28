@@ -13,6 +13,15 @@ public class DeviceAndPhone implements Serializable{
     private static final long serialVersionUID = 1L;
     private Device device;
     private Phone phone;
+    private long allPDId;
+
+    public long getAllPDId() {
+        return allPDId;
+    }
+
+    public void setAllPDId(long allPDId) {
+        this.allPDId = allPDId;
+    }
 
     public Device getDevice() {
         return device;

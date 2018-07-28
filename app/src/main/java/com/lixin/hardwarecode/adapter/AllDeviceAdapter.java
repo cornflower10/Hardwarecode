@@ -21,6 +21,7 @@ public class AllDeviceAdapter extends BaseQuickAdapter<DeviceAndPhone,BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, DeviceAndPhone item) {
-        helper.setText(R.id.tv_name,item.getDevice().getId()+":"+item.getPhone().getPhoneNumber());
+        helper.setText(R.id.tv_name,item.getDevice().getId()+":"+
+                item.getPhone().getPhone_no()+":"+item.getPhone().getProvince());
     }
 }

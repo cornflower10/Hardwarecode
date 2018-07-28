@@ -1,5 +1,6 @@
 package com.lixin.hardwarecode;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,28 +17,27 @@ import com.lixin.hardwarecode.Dao.HistroyDao;
 import com.lixin.hardwarecode.Utis.Mnt;
 import com.lixin.hardwarecode.Utis.ReadAssets;
 import com.lixin.hardwarecode.Utis.SharedPref;
+import com.lixin.hardwarecode.activity.HistoryActivity;
 import com.lixin.hardwarecode.adapter.AllDeviceAdapter;
 import com.lixin.hardwarecode.entity.AllDeviceAndPhone;
 import com.lixin.hardwarecode.entity.DeviceAndPhone;
 import com.lixin.hardwarecode.entity.HistoryDevice;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rv)
     RecyclerView rv;
-    private   List<DeviceAndPhone> deviceAndPhones = new ArrayList<>();
+    private List<DeviceAndPhone> deviceAndPhones = new ArrayList<>();
     private AllDeviceAdapter allDeviceAdapter;
 
     @Override
@@ -45,39 +45,88 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         ButterKnife.bind(this);
-        allDeviceAdapter = new AllDeviceAdapter(deviceAndPhones) ;
+        allDeviceAdapter = new AllDeviceAdapter(deviceAndPhones);
+//        AllDeviceAndPhoneDao.deleteAll();
         rv.setAdapter(allDeviceAdapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        initData();
-        Log.e("MainActivity",getCpu());
+        allDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                DeviceAndPhone deviceAndPhone = deviceAndPhones.get(position);
+                Device device = deviceAndPhone.getDevice();
+                Phone phone = deviceAndPhone.getPhone();
+                Save(device, phone);
+                CPU(device, phone);
+                updateList(deviceAndPhone);
+                HistoryDevice historyDevice = new HistoryDevice();
+                historyDevice.setCreateDate(new Date());
+                historyDevice.setContent(JSONObject.toJSONString(deviceAndPhone));
+                HistroyDao.insert(historyDevice);
+            }
+        });
+        List<AllDeviceAndPhone> all = AllDeviceAndPhoneDao.queryAll();
+        List<HistoryDevice> historyDevices = HistroyDao.queryAll();
+        if ((null == all || all.size() <= 0) ) {
+            initData();
+        } else {
+            deviceAndPhones.clear();
+            for (AllDeviceAndPhone item : all) {
+                DeviceAndPhone deviceAndPhone = JSON.parseObject(item.getContent(), DeviceAndPhone.class);
+                deviceAndPhone.setAllPDId(item.getId());
+                deviceAndPhones.add(deviceAndPhone);
+            }
+
+            allDeviceAdapter.replaceData(deviceAndPhones);
+        }
+
+//        Log.e("MainActivity",getCpu());
+
+    }
+
+    private void updateList(DeviceAndPhone deviceAndPhone) {
+        AllDeviceAndPhoneDao.delete(deviceAndPhone.getAllPDId());
+        List<AllDeviceAndPhone> all = AllDeviceAndPhoneDao.queryAll();
+        deviceAndPhones.clear();
+        for (AllDeviceAndPhone item : all) {
+            DeviceAndPhone deviceAndPhone1 = JSON.parseObject(item.getContent(), DeviceAndPhone.class);
+            deviceAndPhones.add(deviceAndPhone1);
+        }
+
+        allDeviceAdapter.replaceData(deviceAndPhones);
 
     }
 
     private void initData() {
-        AllDeviceAndPhoneDao.deleteAll();
+
+//        AllDeviceAndPhoneDao.deleteAll();
         String str = ReadAssets.readAssetsTxt(this, "device.json");
-        String strPhone = ReadAssets.readAssetsTxt(this, "phone.json");
+        String strPhone = ReadAssets.readAssetsTxt(this, "phone_75.json");
         List<Device> list = JSONObject.parseArray(str, Device.class);
         List<Phone> phones = JSONObject.parseArray(strPhone, Phone.class);
         List<DeviceAndPhone> deviceAndPhoneList = new ArrayList<>();
         if (list.size() >= phones.size()) {
-            for (Device d : list) {
-                DeviceAndPhone deviceAndPhone = new DeviceAndPhone();
-                deviceAndPhone.setDevice(d);
-                deviceAndPhoneList.add(deviceAndPhone);
-            }
+//            for (Device d : list) {
+//                DeviceAndPhone deviceAndPhone = new DeviceAndPhone();
+//                deviceAndPhone.setDevice(d);
+//                deviceAndPhoneList.add(deviceAndPhone);
+//            }
+//
+//            for (int i = 0; i < phones.size(); i++) {
+//                deviceAndPhoneList.get(i).setPhone(phones.get(i));
+//            }
 
-            for (int i = 0; i < phones.size(); i++) {
-                deviceAndPhoneList.get(i).setPhone(phones.get(i));
-            }
 
         } else {
 
+            Random random = new Random();
             for (Phone phone : phones) {
                 DeviceAndPhone deviceAndPhone = new DeviceAndPhone();
                 deviceAndPhone.setPhone(phone);
+                Device device = list.get(random.nextInt(list.size()));
+                deviceAndPhone.setDevice(device);
                 deviceAndPhoneList.add(deviceAndPhone);
             }
+
 
             for (int i = 0; i < list.size(); i++) {
                 deviceAndPhoneList.get(i).setDevice(list.get(i));
@@ -96,51 +145,17 @@ public class MainActivity extends AppCompatActivity {
         AllDeviceAndPhoneDao.insertList(allDeviceAndPhoneList);
         List<AllDeviceAndPhone> all = AllDeviceAndPhoneDao.queryAll();
         deviceAndPhones.clear();
-        for (AllDeviceAndPhone item :all){
-          DeviceAndPhone deviceAndPhone = JSON.parseObject(item.getContent(),DeviceAndPhone.class);
+        for (AllDeviceAndPhone item : all) {
+            DeviceAndPhone deviceAndPhone = JSON.parseObject(item.getContent(), DeviceAndPhone.class);
             deviceAndPhones.add(deviceAndPhone);
         }
 
         allDeviceAdapter.replaceData(deviceAndPhones);
-        allDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DeviceAndPhone deviceAndPhone = deviceAndPhones.get(position);
-                Device device = deviceAndPhone.getDevice();
-                Phone phone = deviceAndPhone.getPhone();
-                Save(device,phone);
-                HistoryDevice historyDevice = new HistoryDevice();
-                historyDevice.setCreateDate(new Date());
-                historyDevice.setContent(JSONObject.toJSONString(deviceAndPhone));
-                HistroyDao.insert(historyDevice);
-            }
-        });
+
     }
 
 
-
-    public static String getCpu() {
-        StringBuffer sb = new StringBuffer();
-        try {
-            FileReader fr = new FileReader("/proc/cpuinfo");
-            BufferedReader br = new BufferedReader(fr);
-            String aLine;
-            while ((aLine = br.readLine()) != null) {
-                sb.append(aLine + "\n");
-            }
-            if (br != null) {
-                br.close();
-            }
-           return sb.toString();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void Save( Device device,Phone phone) {
+    private void Save(Device device, Phone phone) {
 
 
         SharedPref mySP = new SharedPref(getApplicationContext());
@@ -202,27 +217,27 @@ public class MainActivity extends AppCompatActivity {
  /*
      TelephonyManager相关
      */
-        mySP.setSharedPref("IMEI", phone.getIMEI()); // 序列号IMEI
-        mySP.setSharedPref("LYMAC", phone.getLYMAC());//蓝牙 MAC
-        mySP.setSharedPref("WifiMAC", phone.getWifiMAC()); // WIF mac地址
-        mySP.setSharedPref("WifiName", phone.getWifiName()); // 无线路由器名
-        mySP.setSharedPref("BSSID", phone.getBSSID()); // 无线路由器地址
-        mySP.setSharedPref("IMSI", phone.getIMSI());
-        mySP.setSharedPref("PhoneNumber", phone.getPhoneNumber()); // 手机号码
+        mySP.setSharedPref("IMEI", phone.getImei()); // 序列号IMEI
+        mySP.setSharedPref("LYMAC", phone.getLy_mac());//蓝牙 MAC
+        mySP.setSharedPref("WifiMAC", phone.getWifi_mac()); // WIF mac地址
+        mySP.setSharedPref("WifiName", phone.getWifi_name()); // 无线路由器名
+        mySP.setSharedPref("BSSID", phone.getBss_id()); // 无线路由器地址
+        mySP.setSharedPref("IMSI", phone.getImsi());
+        mySP.setSharedPref("PhoneNumber", phone.getPhone_no()); // 手机号码
         mySP.setSharedPref("SimSerial", phone.getSerial()); // 手机卡序列号
-        mySP.setSharedPref("networktor", "46001"); // 网络运营商类型
-        mySP.setSharedPref("Carrier", "中国联通");// 网络类型名
-        mySP.setSharedPref("CarrierCode", "46001"); // 运营商
-        mySP.setSharedPref("simopename", "中国联通");// 运营商名字
+        mySP.setSharedPref("networktor", phone.getNetworktor()); // 网络运营商类型
+        mySP.setSharedPref("Carrier", phone.getCarrier());// 网络类型名
+        mySP.setSharedPref("CarrierCode", phone.getCarrier_code()); // 运营商
+        mySP.setSharedPref("simopename", phone.getSim_opename());// 运营商名字
 
-        mySP.setintSharedPref("getType", phone.getGetType()); // 联网方式 1为WIFI 2为流量
-        mySP.setintSharedPref("networkType", phone.getNetworkType());//      网络类型
-        mySP.setintSharedPref("phonetype", phone.getPhonetype()); // 手机类型
-        mySP.setintSharedPref("SimState", phone.getSimState()); // 手机卡状态
+        mySP.setintSharedPref("getType", phone.getGet_type()); // 联网方式 1为WIFI 2为流量
+        mySP.setintSharedPref("networkType", phone.getNetwork_type());//      网络类型
+        mySP.setintSharedPref("phonetype", phone.getPhone_type()); // 手机类型
+        mySP.setintSharedPref("SimState", phone.getSim_state()); // 手机卡状态
 
         mySP.setSharedPref("serial", phone.getSerial()); // 串口序列号
-        mySP.setSharedPref("AndroidID", phone.getAndroidID()); //  android id
-        mySP.setSharedPref("DESCRIPTION", phone.getDESCRIPTION()); //用户的KEY
+        mySP.setSharedPref("AndroidID", phone.getAndroid_id()); //  android id
+        mySP.setSharedPref("DESCRIPTION", phone.getDescription()); //用户的KEY
 
 //        mySP.setintSharedPref("getIP", -123456789); // 内网ip(wifl可用)
 
@@ -234,8 +249,8 @@ public class MainActivity extends AppCompatActivity {
         30.2425140000,120.1404220000 杭州
      */
 
-        mySP.setfloatharedPref("lat", phone.getLat()); // 纬度
-        mySP.setfloatharedPref("log", phone.getLog()); // 经度
+        mySP.setfloatharedPref("lat", Float.parseFloat(phone.getLat())); // 纬度
+        mySP.setfloatharedPref("log", Float.parseFloat(phone.getLog())); // 经度
 
 
         Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
@@ -252,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
   创建 cpuinfo 文件 等待HOOK 重定向
  */
 
-    private void CPU(Device device,Phone phone) {
+    private void CPU(Device device, Phone phone) {
 
         String filePath = "/sdcard/Test/";
         String fileName = "cpuinfo";
@@ -281,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         String strContent15 = "" + "\r\n";
         String strContent16 = "Hardware	: " + hardware + "\r\n";
         String strContent17 = "Revision	: 000d" + "\r\n";
-        String strContent18 = "Serial		: "+phone.getSerialCPU() + "\r\n";
+        String strContent18 = "Serial		: " + phone.getSerial_cpu() + "\r\n";
         try {
             File file = new File(strFilePath);
             if (!file.exists()) {
@@ -324,4 +339,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @OnClick(R.id.tv_history)
+    public void onViewClicked() {
+        Intent intent =new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
 }
